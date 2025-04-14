@@ -1,0 +1,49 @@
+% Untuned plot
+t = linspace(0, 20, length(Untuned_error));
+figure
+plot(t',Untuned_error, 'Color', [0, 0, 1, 0.1], 'LineWidth', 1.5); % Blue line for Untuned_error with alpha value 0.5
+xlabel('Time (seconds)'); % Adjust the x-label to represent time in seconds
+ylabel('Error (radians)');
+title('Feedforward Tuning');
+
+%%
+grid on
+hold on 
+
+% Tuned Kfc
+plot(t',Error_kfc, 'Color', [1, 0, 0, 0.5], 'LineStyle', '--', 'LineWidth', 1); % Red dashed line for Error_kfc with alpha value 0.5
+
+% Tuned Kfc and Kfa
+plot(t',Error_c_a, 'Color', [0.549, 0.251, 0, 1], 'LineStyle', '--', 'LineWidth', 1); 
+%0.102, 0.788, 1
+% Tuned Kfc, Kfa and Kfv
+plot(t',all_tuned, 'Color', [0, 1, 0, 1], 'LineStyle', '--', 'LineWidth', 1); 
+%1, 0.71, 0.549,
+legend('Untuned Error', 'Tuned Error (Kfc)', 'Tuned Error (Kfc and Kfa)', 'Tuned Feedforward '); % Adding legends for each plot
+
+%%
+hold on; % To keep the existing plot and add highlighted sections
+
+% Define the sections to highlight
+sections = [8.0675, 10.59; 11.529, 14.06]; % Define intervals to highlight
+
+% Get the minimum and maximum error values for the y-axis range
+minError = min(Untuned_error) ;
+maxError = max(Untuned_error) ;
+
+% Define specific colors for each section
+colors = {[0.8, 0.2, 0.1], [0.2, 0.6, 0.8]}; % Red for section 1, Blue for section 2
+
+% Highlight each section with the specified colors and add separate legends
+legendInfo = cell(size(sections, 1), 1);
+for i = 1:size(sections, 1)
+    area([sections(i, 1), sections(i, 2)], [minError, minError], maxError, 'FaceColor', colors{i}, 'FaceAlpha', 0.1);
+    
+    % Add text labels for each section
+    
+end
+
+
+legend('Untuned Error', 'Tuned Error (Kfc)', 'Tuned Error (Kfc and Kfa)', 'All tuned ', 'Forward motion', 'Backward Motion'); % Adding legends for each plot
+
+hold off; % Release the hold on the current plot

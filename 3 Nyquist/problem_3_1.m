@@ -1,0 +1,23 @@
+% System 
+m1 = 0.015; % kg
+m2 = 0.0045; %kg
+d = 0.4; %Ns/m
+k = 2200; %N/m
+
+s = tf('s');
+H1 = (m2*s^2+d*s+k)/(m1*m2*s^4+d*(m1+m2)*s^3+k*(m1+m2)*s^2); % F to x1
+
+bode(H1)
+
+%% Create a simple stabilizing controller 
+
+% Created the controller in Shapeit by using the PD and gain. 
+
+%It is named as Ex_3_1_controller.slx
+
+%% Simulink model to see the closed loop block scheme
+
+out = sim('closed_loop_model_3_1'); %Getting error that at time 4.07 there no finite value 
+%% Plot the error 
+
+plot(out.tout,out.error_1)
